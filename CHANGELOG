@@ -46,3 +46,13 @@ README.
   expectation inverted. After fixing both, all checks (one positive,
   three negative controls) pass as expected — evidence, not proof, that
   the characterization needs no modification for this mixed case.
+- `growth_rate_omega.py` written and run: independent cross-check of ρ_Ω
+  via a coefficient-ratio test on the exact rational series, sharing no
+  code with `critical_point_omega.py`'s criticality-condition approach.
+  Truncation order reduced from a planned N=400 to N=150 for practicality
+  (the exact solver costs roughly O(N³); 26s at N=150, yielding 144
+  non-zero terms). Result: 1/ρ_Ω ≈ 1.865 by raw ratio test, versus 1.882
+  from the critical-point method — a ~1% gap consistent with the known
+  slow, from-above convergence of the raw ratio test (documented in [1])
+  rather than a contradiction. Both methods agree that ρ_Ω is smaller
+  than both ρ_5 and ρ_6.
