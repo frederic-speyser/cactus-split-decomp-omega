@@ -32,10 +32,38 @@ on Zenodo as a working paper (not a journal submission) titled *"Numerical
 Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
 Ω = {5, 6}: Exploratory Computations"*.
 
+## Two indexing conventions: vertices vs. blocks
+
+This repository computes the same underlying enumeration in two
+different indexings, because Ω = {5, 6} makes both genuinely necessary.
+
+The published OEIS sequences for the pure-*m* case (A398033–A398035,
+A397210, A397546, …) are indexed by **number of blocks** *k*, not by
+vertex count *n*. For a single fixed *m*, vertex count and block count
+are related by the bijection *n* = 1 + (*m*−1)*k*, so "the list of
+non-zero x^n coefficients, in order" already *is* the by-*k* sequence —
+the two indexings coincide and can be read interchangeably.
+
+For a mixed Ω, that bijection no longer holds. A fixed *k* admits
+several possible *n* (a chain of *k* blocks can mix pentagons and
+hexagons in any proportion), and a fixed *n* can arise from several
+different *k* (e.g. at *n* = 21, both *k* = 4 all-hexagon and *k* = 5
+all-pentagon configurations coexist). The two indexings genuinely
+diverge, and each requires its own computation:
+
+- `mgonal_cactus_series_omega.py` computes the series indexed by vertex
+  count *n* — the same convention as every other script in this
+  repository, and the natural one for questions about ρ_Ω, τ_Ω, and the
+  growth rate.
+- `mgonal_cactus_series_omega_blocks.py` computes the series indexed by
+  block count *k* — a genuinely bivariate computation (vertices and
+  blocks tracked as separate variables) — matching the convention OEIS
+  submissions for this family use.
+
 ## Repository structure
 
 ```
-python/   the six Python scripts (solver, cross-checks)
+python/   the seven Python scripts (solver, block-indexed solver, cross-checks)
 pari/     the one PARI/GP script (verify_pari_omega.gp)
 ```
 
@@ -54,7 +82,7 @@ pari/     the one PARI/GP script (verify_pari_omega.gp)
   ratio test used in `mgonal_cactus_growth_rate.py`, and compares it
   against the already-published values 1/ρ_5, 1/ρ_6. Independent of
   `critical_point_omega.py` (no shared code); result: 1/ρ_Ω ≈ 1.865 by
-  raw ratio test, versus 1.882 from the critical-point method - a small
+  raw ratio test, versus 1.882 from the critical-point method — a small
   gap consistent with the known slow convergence of the raw ratio test,
   not a contradiction (see CHANGELOG).
 - **`critical_point_omega.py`** - solves the critical-point system
@@ -66,6 +94,17 @@ pari/     the one PARI/GP script (verify_pari_omega.gp)
   (0.604765) and ρ_6 (0.633235) - the growth rate exceeds both pure cases
   rather than interpolating between them (see CHANGELOG for verification
   details).
+
+- **`mgonal_cactus_series_omega_blocks.py`** - computes the same rooted
+  and unrooted enumeration, indexed by *number of blocks* rather than
+  vertex count - the convention OEIS submissions for this family use
+  (see § Two indexing conventions above). A genuinely bivariate
+  computation (vertices *and* blocks tracked as separate variables), not
+  a relabeling of the series above. Self-validates against the real
+  published A398035 data (Ω={6} case) every time it runs; independently
+  cross-checked against `exhaustive_iso_omega.py` at *k* = 1, 2, and
+  against the vertex-indexed series' full marginal — see the script's
+  own docstring for the derivation.
 
 ## Supplementary verification scripts
 
@@ -83,35 +122,29 @@ pari/     the one PARI/GP script (verify_pari_omega.gp)
   ever treats a single fixed *m*. Result: it does, on the cases tested
   (a pentagon glued to a hexagon, plus the same three negative controls
   as the original script). Two bugs were found and fixed in this script
-  during development (see CHANGELOG) - the result is evidence, not proof,
+  during development (see CHANGELOG) — the result is evidence, not proof,
   of the wider claim.
-- **`verify_dissymmetry_omega.py`** — verifies the unrooted series G(x)
+- **`verify_dissymmetry_omega.py`** - verifies the unrooted series G(x)
   via the dissymmetry theorem for mixed Ω, where the re-rooted term T_Cm
   becomes a sum of dihedral cycle indices Z_D5 + Z_D6 rather than a
-  single one - extending `verify_dissymmetry_all_m.py` to the mixed case.
+  single one — extending `verify_dissymmetry_all_m.py` to the mixed case.
   Uses `sympy.Rational` with hand-written convolutions rather than
   `fractions.Fraction`. Matches the main solver exactly on the first 8
-  non-zero terms (see CHANGELOG for a documented dead end - a fully
+  non-zero terms (see CHANGELOG for a documented dead end — a fully
   symbolic SymPy approach that was too slow and was abandoned).
-- **`verify_pari_omega.gp`** - a second, independent solver in PARI/GP,
+- **`verify_pari_omega.gp`** -— a second, independent solver in PARI/GP,
   using native truncated power series arithmetic, as a cross-check of
   `mgonal_cactus_series_omega.py` by a different code path (and language)
-  entirely - extending `verify_pari.gp` to the mixed-Ω case. Matches both
+  entirely — extending `verify_pari.gp` to the mixed-Ω case. Matches both
   Python implementations exactly, and extends the check to x^40 (see
   CHANGELOG for three non-mathematical PARI/GP pitfalls encountered and
   documented along the way).
-
-## Repository structure
-
-```
-python/    all Python scripts (six of the seven)
-pari/      the PARI/GP script (verify_pari_omega.gp)
-```
 
 ## Usage
 
 ```bash
 python3 python/mgonal_cactus_series_omega.py --omega 5,6
+python3 python/mgonal_cactus_series_omega_blocks.py --omega 5,6 --terms 10
 python3 python/growth_rate_omega.py --omega 5,6
 python3 python/critical_point_omega.py --omega 5,6
 python3 python/exhaustive_iso_omega.py       # requires: pip install networkx
@@ -141,7 +174,18 @@ unrooted (offset 1): x^5 + x^6 + x^9 + x^10 + x^11 + 3x^13 + 6x^14 +
 6300x^30 + 16348x^31 + 31201x^32
 ```
 
-Not yet submitted to the OEIS - see Data availability below.
+Not yet submitted to the OEIS — see Data availability below.
+
+Actual output of `mgonal_cactus_series_omega_blocks.py --omega 5,6 --terms 10`
+(this is the block-indexed data intended for OEIS submission):
+
+```
+Rooted, by k=1..10:
+  2, 13, 125, 1393, 17184, 224994, 3071154, 43207036, 622076867, 9121160902
+
+Unrooted, by k=1..10:
+  2, 3, 19, 120, 1118, 11581, 133269, 1621163, 20613170, 270724916
+```
 
 ## Relation to prior work
 
@@ -154,12 +198,22 @@ literature searches have shown, no numerical enumeration for a mixed
 
 ## Data availability
 
-The 25 rooted and 25 unrooted terms shown above (§ Usage) have been
-computed but not yet submitted to the OEIS — no search for a possible
-prior match has been done yet. The *k* = 1 and *k* = 2 terms have been
-independently cross-checked by direct construction
-(`exhaustive_iso_omega.py`); everything beyond *k* = 2 still rests on the
-solver alone.
+Two indexings exist for this Ω, computed by two different scripts (see
+§ Two indexing conventions above) — neither yet submitted to the OEIS,
+no search for a possible prior match has been done for either:
+
+- **By vertex count** (`mgonal_cactus_series_omega.py`): 25 rooted and
+  25 unrooted terms shown above. The *k* = 1 and *k* = 2 block cases have
+  been independently cross-checked by direct construction
+  (`exhaustive_iso_omega.py`); everything beyond rests on the solver
+  alone.
+- **By block count** (`mgonal_cactus_series_omega_blocks.py`, the OEIS
+  convention for this family): 10 rooted and 10 unrooted terms shown
+  above. Validated against the real published A398035 data for the pure
+  Ω={6} case; the *k* = 1 and *k* = 2 mixed-Ω values (2 and 3, unrooted)
+  independently match `exhaustive_iso_omega.py`'s direct construction,
+  and the full marginal (summed over *k* for each *n*) reproduces the
+  vertex-indexed series above exactly.
 
 ## Progress
 
@@ -182,6 +236,9 @@ solver alone.
 - [x] Second, independent solver in PARI/GP — matches both Python
       implementations exactly, extends the check to x^40
       (`verify_pari_omega.gp`)
+- [x] Block-indexed series matching the OEIS convention for this family,
+      self-validated against the real published A398035 data
+      (`mgonal_cactus_series_omega_blocks.py`)
 
 This list will be updated as the work progresses; nothing above should be
 taken as established until its box is checked.
@@ -194,8 +251,11 @@ discussed with others.
 ## Citation
 
 Citable archives of this repository are available via Zenodo:
-- **v1.1** ("Complete toolkit" — all seven scripts in place, organized
-  into `python/` and `pari/`):
+- v1.2 (block-indexed series added, matching the OEIS convention for
+  this family — see § Two indexing conventions above) is in
+  preparation; the DOI will be added here once archived.
+- **v1.1** ("Complete toolkit" — all seven originally planned scripts in
+  place, organized into `python/` and `pari/`):
   [10.5281/zenodo.21840699](https://doi.org/10.5281/zenodo.21840699)
 - v1.0 (initial release, four of seven scripts):
   [10.5281/zenodo.21838871](https://doi.org/10.5281/zenodo.21838871)
@@ -221,7 +281,7 @@ further along.
 
 ## Author
 
-Frédéric G. Speyser - Independent Researcher, France - https://orcid.org/0000-0002-1767-5325
+Frédéric G. Speyser — Independent Researcher, France - [https://orcid.org/0000-0002-1767-5325](https://orcid.org/0000-0002-1767-5325) 
 
 ## License
 
