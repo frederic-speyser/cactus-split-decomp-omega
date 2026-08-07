@@ -63,12 +63,16 @@ Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
   and deduplicates by graph isomorphism (via `networkx`) — in the same
   spirit as `exhaustive_iso.py` in the original repository. Matches the
   solver's *k* = 1, *k* = 2 unrooted coefficients exactly (see CHANGELOG).
-- **`split_tree_omega.py`** *(planned)* — a brute-force split-decomposition
-  search (Definition 1 of the original paper), extending `split_tree_v2.py`
-  to test whether Theorem 1's characterization still holds unchanged when
-  two different cycle sizes can meet at the same cut vertex — a structural
-  question the original paper never addresses, since it only ever treats
-  a single fixed *m*.
+- **`split_tree_omega.py`** — a brute-force split-decomposition search
+  (Definition 1 of the original paper), extending `split_tree_v2.py` to
+  test whether Theorem 1's characterization still holds unchanged when
+  two different cycle sizes can meet at the same cut vertex — a
+  structural question the original paper never addresses, since it only
+  ever treats a single fixed *m*. Result: it does, on the cases tested
+  (a pentagon glued to a hexagon, plus the same three negative controls
+  as the original script). Two bugs were found and fixed in this script
+  during development (see CHANGELOG) — the result is evidence, not proof,
+  of the wider claim.
 - **`verify_dissymmetry_omega.py`** *(planned)* — will verify the unrooted
   series G(x) via the dissymmetry theorem for mixed Ω, where the re-rooted
   term T_Cm becomes a sum of dihedral cycle indices Z_D5 + Z_D6 rather than
@@ -144,8 +148,10 @@ solver alone.
 - [x] Search for a closed form for τ_Ω, or evidence of a structural
       obstruction comparable to Proposition 1 of [1] — no closed form
       found among natural candidates tested (`critical_point_omega.py`)
-- [ ] Check whether Theorem 1's split-decomposition characterization
-      holds unchanged for mixed cycle sizes (`split_tree_omega.py`)
+- [x] Check whether Theorem 1's split-decomposition characterization
+      holds unchanged for mixed cycle sizes — confirmed on a pentagon +
+      hexagon pair and the standard negative controls, after fixing two
+      bugs in the test script itself (`split_tree_omega.py`)
 - [ ] Independent verification of the unrooted series via the dissymmetry
       theorem (`verify_dissymmetry_omega.py`)
 - [ ] Second, independent solver in PARI/GP (`verify_pari_omega.gp`)
