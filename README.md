@@ -41,10 +41,14 @@ Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
   rational formal power series arithmetic (Python `Fraction`).
   Cross-checked against the pure *m* = 5, *m* = 6 series of [1] at
   degree 21 (see CHANGELOG).
-- **`growth_rate_omega.py`** *(planned)* — will estimate the exponential
-  growth rate 1/ρ_Ω from the coefficients computed above, via the same
-  *n*−3/2-corrected ratio test used in `mgonal_cactus_growth_rate.py`,
-  and compare it against the already-published values 1/ρ_5, 1/ρ_6.
+- **`growth_rate_omega.py`** — estimates the exponential growth rate 1/ρ_Ω
+  from the coefficients computed above, via the same *n*−3/2-corrected
+  ratio test used in `mgonal_cactus_growth_rate.py`, and compares it
+  against the already-published values 1/ρ_5, 1/ρ_6. Independent of
+  `critical_point_omega.py` (no shared code); result: 1/ρ_Ω ≈ 1.865 by
+  raw ratio test, versus 1.882 from the critical-point method — a small
+  gap consistent with the known slow convergence of the raw ratio test,
+  not a contradiction (see CHANGELOG).
 - **`critical_point_omega.py`** — solves the critical-point system
   Φ(ρ,τ)=τ, Φ_y(ρ,τ)=1 numerically for Ω = {5, 6}. As predicted by hand
   before running it (the *m* = 6 branch of *K_C* reintroduces a term
@@ -140,11 +144,9 @@ solver alone.
 - [x] Extend the solver to non-singleton Ω (`mgonal_cactus_series_omega.py`)
 - [x] Independent construction of the small cases, mixed sizes
       (`exhaustive_iso_omega.py`)
-- [ ] Independent cross-check of ρ_{5,6} by the coefficient-ratio method
-      (`growth_rate_omega.py`) — a preliminary value (ρ_Ω = 0.531336,
-      smaller than both ρ_5 and ρ_6) already came out of
-      `critical_point_omega.py`'s bisection method; this item is about
-      confirming it by a second, unrelated method, as in [1]
+- [x] Independent cross-check of ρ_{5,6} by the coefficient-ratio method
+      — done, agrees with `critical_point_omega.py` within ~1%
+      (`growth_rate_omega.py`)
 - [x] Search for a closed form for τ_Ω, or evidence of a structural
       obstruction comparable to Proposition 1 of [1] — no closed form
       found among natural candidates tested (`critical_point_omega.py`)
@@ -166,9 +168,11 @@ discussed with others.
 
 ## Citation
 
-No citable version of this work exists yet. Once the working paper
-mentioned above is deposited on Zenodo, its DOI will be added here,
-alongside guidance for citing this repository's code directly.
+A citable archive of this repository (v0.1) is available via Zenodo:
+[10.5281/zenodo.21838871](https://doi.org/10.5281/zenodo.21838871). No
+written account of this work has been deposited yet — see § About this
+exploration for the working paper planned once the computations are
+further along.
 
 ## References
 
