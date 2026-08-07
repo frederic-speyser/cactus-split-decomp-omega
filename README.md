@@ -1,15 +1,20 @@
-# Numerical Extension of the Enumeration of Non-Plane Cactus Graphs to the Case Ω = {5, 6} - exploratory computations
+# Numerical Extension of the Enumeration of Non-Plane Cactus Graphs to the Case Ω = {5, 6} - Exploratory computations
+
+**Status: Feature-complete** (all seven planned scripts written and
+cross-checked, v1.1) - this refers only to the scripts, not to any
+scientific claim; see § About this exploration and § Progress for what
+remains unproved.
 
 ## About this exploration
 
 A *cactus graph* is a connected graph in which every edge lies on at most
 one cycle. A companion paper (Speyser, 2026) enumerates *strict m-gonal
-cacti* — cacti in which every block is a cycle of a single fixed length
-*m*, in the free (non-plane) setting — for *m* ≥ 5, deriving closed-form
+cacti* - cacti in which every block is a cycle of a single fixed length
+*m*, in the free (non-plane) setting - for *m* ≥ 5, deriving closed-form
 and asymptotic results via split-decomposition. Its concluding remarks
 note that the method extends "without difficulty" to a finite set Ω of
-admissible cycle lengths — a cactus mixing, say, pentagons and hexagons at
-different cut vertices — but this extension was never carried out, for any
+admissible cycle lengths - a cactus mixing, say, pentagons and hexagons at
+different cut vertices - but this extension was never carried out, for any
 Ω, either numerically or analytically.
 
 This repository begins that execution, starting from the case Ω = {5, 6}.
@@ -31,9 +36,16 @@ on Zenodo as a working paper (not a journal submission) titled *"Numerical
 Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
 Ω = {5, 6}: Exploratory Computations"*.
 
+## Repository structure
+
+```
+python/   the six Python scripts (solver, cross-checks)
+pari/     the one PARI/GP script (verify_pari_omega.gp)
+```
+
 ## Core scripts
 
-- **`mgonal_cactus_series_omega.py`** — computes the rooted and unrooted
+- **`mgonal_cactus_series_omega.py`** - computes the rooted and unrooted
   enumeration series for strict cactus graphs admitting a finite set Ω of
   cycle lengths, generalizing `mgonal_cactus_series.py` from the original
   repository: the kernel *K_C* becomes a sum of one USEQ term per size in
@@ -41,7 +53,7 @@ Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
   rational formal power series arithmetic (Python `Fraction`).
   Cross-checked against the pure *m* = 5, *m* = 6 series of [1] at
   degree 21 (see CHANGELOG).
-- **`growth_rate_omega.py`** — estimates the exponential growth rate 1/ρ_Ω
+- **`growth_rate_omega.py`** - estimates the exponential growth rate 1/ρ_Ω
   from the coefficients computed above, via the same *n*−3/2-corrected
   ratio test used in `mgonal_cactus_growth_rate.py`, and compares it
   against the already-published values 1/ρ_5, 1/ρ_6. Independent of
@@ -49,7 +61,7 @@ Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
   raw ratio test, versus 1.882 from the critical-point method — a small
   gap consistent with the known slow convergence of the raw ratio test,
   not a contradiction (see CHANGELOG).
-- **`critical_point_omega.py`** — solves the critical-point system
+- **`critical_point_omega.py`** - solves the critical-point system
   Φ(ρ,τ)=τ, Φ_y(ρ,τ)=1 numerically for Ω = {5, 6}. As predicted by hand
   before running it (the *m* = 6 branch of *K_C* reintroduces a term
   linear in *y* that blocks the substitution of Theorem 2 of the original
@@ -61,13 +73,13 @@ Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
 
 ## Supplementary verification scripts
 
-- **`exhaustive_iso_omega.py`** — builds strict cacti for Ω = {5, 6} with
+- **`exhaustive_iso_omega.py`** - builds strict cacti for Ω = {5, 6} with
   1 and 2 blocks directly as graphs (no functional equation involved),
   including configurations explicitly mixing a pentagon and a hexagon,
   and deduplicates by graph isomorphism (via `networkx`) — in the same
   spirit as `exhaustive_iso.py` in the original repository. Matches the
   solver's *k* = 1, *k* = 2 unrooted coefficients exactly (see CHANGELOG).
-- **`split_tree_omega.py`** — a brute-force split-decomposition search
+- **`split_tree_omega.py`** - a brute-force split-decomposition search
   (Definition 1 of the original paper), extending `split_tree_v2.py` to
   test whether Theorem 1's characterization still holds unchanged when
   two different cycle sizes can meet at the same cut vertex — a
@@ -77,25 +89,39 @@ Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
   as the original script). Two bugs were found and fixed in this script
   during development (see CHANGELOG) — the result is evidence, not proof,
   of the wider claim.
-- **`verify_dissymmetry_omega.py`** *(planned)* — will verify the unrooted
-  series G(x) via the dissymmetry theorem for mixed Ω, where the re-rooted
-  term T_Cm becomes a sum of dihedral cycle indices Z_D5 + Z_D6 rather than
-  a single one — extending `verify_dissymmetry_all_m.py` to the mixed case.
-- **`verify_pari_omega.gp`** *(planned)* — a second, independent solver in
-  PARI/GP, using native truncated power series arithmetic, as a cross-check
-  of `mgonal_cactus_series_omega.py` by a different code path entirely —
-  extending `verify_pari.gp` to the mixed-Ω case.
+- **`verify_dissymmetry_omega.py`** - verifies the unrooted series G(x)
+  via the dissymmetry theorem for mixed Ω, where the re-rooted term T_Cm
+  becomes a sum of dihedral cycle indices Z_D5 + Z_D6 rather than a
+  single one — extending `verify_dissymmetry_all_m.py` to the mixed case.
+  Uses `sympy.Rational` with hand-written convolutions rather than
+  `fractions.Fraction`. Matches the main solver exactly on the first 8
+  non-zero terms (see CHANGELOG for a documented dead end — a fully
+  symbolic SymPy approach that was too slow and was abandoned).
+- **`verify_pari_omega.gp`** - a second, independent solver in PARI/GP,
+  using native truncated power series arithmetic, as a cross-check of
+  `mgonal_cactus_series_omega.py` by a different code path (and language)
+  entirely — extending `verify_pari.gp` to the mixed-Ω case. Matches both
+  Python implementations exactly, and extends the check to x^40 (see
+  CHANGELOG for three non-mathematical PARI/GP pitfalls encountered and
+  documented along the way).
+
+## Repository structure
+
+```
+python/    all Python scripts (six of the seven)
+pari/      the PARI/GP script (verify_pari_omega.gp)
+```
 
 ## Usage
 
 ```bash
-python3 mgonal_cactus_series_omega.py --omega 5,6
-python3 growth_rate_omega.py --omega 5,6
-python3 critical_point_omega.py --omega 5,6
-python3 exhaustive_iso_omega.py       # requires: pip install networkx
-python3 split_tree_omega.py
-python3 verify_dissymmetry_omega.py   # requires: pip install sympy
-gp -q verify_pari_omega.gp
+python3 python/mgonal_cactus_series_omega.py --omega 5,6
+python3 python/growth_rate_omega.py --omega 5,6
+python3 python/critical_point_omega.py --omega 5,6
+python3 python/exhaustive_iso_omega.py       # requires: pip install networkx
+python3 python/split_tree_omega.py
+python3 python/verify_dissymmetry_omega.py --omega 5,6   # requires: pip install sympy
+gp -q pari/verify_pari_omega.gp < /dev/null               # requires: PARI/GP
 ```
 
 No dependencies beyond the Python standard library and `numpy`; `networkx`
@@ -154,9 +180,12 @@ solver alone.
       holds unchanged for mixed cycle sizes — confirmed on a pentagon +
       hexagon pair and the standard negative controls, after fixing two
       bugs in the test script itself (`split_tree_omega.py`)
-- [ ] Independent verification of the unrooted series via the dissymmetry
-      theorem (`verify_dissymmetry_omega.py`)
-- [ ] Second, independent solver in PARI/GP (`verify_pari_omega.gp`)
+- [x] Independent verification of the unrooted series via the dissymmetry
+      theorem — matches exactly on the first 8 non-zero terms
+      (`verify_dissymmetry_omega.py`)
+- [x] Second, independent solver in PARI/GP — matches both Python
+      implementations exactly, extends the check to x^40
+      (`verify_pari_omega.gp`)
 
 This list will be updated as the work progresses; nothing above should be
 taken as established until its box is checked.
@@ -168,8 +197,11 @@ discussed with others.
 
 ## Citation
 
-A citable archive of this repository (v0.1) is available via Zenodo:
-[10.5281/zenodo.21838871](https://doi.org/10.5281/zenodo.21838871). No
+A citable archive of this repository is available via Zenodo. The latest
+tagged version is v1.0
+([10.5281/zenodo.21838871](https://doi.org/10.5281/zenodo.21838871)); a
+v1.1 archive ("Complete toolkit" — all seven scripts in place, organized
+into `python/` and `pari/`) is expected shortly, see CHANGELOG. No
 written account of this work has been deposited yet — see § About this
 exploration for the working paper planned once the computations are
 further along.
