@@ -4,6 +4,29 @@ All notable changes to this exploration are recorded here, in the order
 they happened, including any deviation from the plan described in the
 README.
 
+## v1.2 — Bivariate enumeration by block count — 2026-08-07
+
+### Added
+- `mgonal_cactus_series_omega_blocks.py`: a genuinely bivariate solver
+  (vertices *and* blocks tracked as separate variables), computing the
+  series indexed by number of blocks — the convention OEIS submissions
+  for this family use, alongside the vertex-indexed convention already
+  computed by `mgonal_cactus_series_omega.py`. Self-validates against
+  the real, already-published A398035 data (Ω={6} case) every time it
+  runs. Independently cross-checked twice more: the *k*=1 and *k*=2
+  mixed-Ω values (2 and 3, unrooted) match `exhaustive_iso_omega.py`'s
+  direct graph construction exactly, and the full marginal (summed over
+  *k* for each *n*) reproduces the vertex-indexed series exactly.
+- Two OEIS submission sheets (rooted and unrooted, block-indexed)
+  prepared following the exact template of the revision histories of
+  A398033–A398035 and A397546 (minimal NAME, no separate Comments field,
+  `(Python) # See Links` for Prog, DATA length checked against
+  on-screen line limits).
+- New README section, "Two indexing conventions: vertices vs. blocks",
+  explaining why Ω = {5, 6} requires both a vertex-indexed and a
+  block-indexed computation, unlike the pure-*m* case where the two
+  coincide.
+
 ## v1.1 — "Complete toolkit" — 2026-08-07
 
 ### Added
