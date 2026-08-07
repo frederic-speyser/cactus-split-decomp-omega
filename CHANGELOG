@@ -25,3 +25,24 @@ README.
   to a hexagon), deduplicated by graph isomorphism via `networkx`,
   entirely independently of the functional equation. Matches the
   solver's unrooted coefficients exactly (1 at each of x⁹, x¹⁰, x¹¹).
+- `critical_point_omega.py` written and run: the critical-point system
+  for Ω = {5, 6} was first worked out by hand (see journal), predicting
+  no closed form for τ_Ω by the method of Theorem 2 of [1], since the
+  *m* = 6 branch of K_C reintroduces a term linear in *y* that does not
+  cancel. Numerically confirmed: no match found among several natural
+  closed-form candidates. Unexpected finding, verified stable across
+  truncation orders (N = 400 to 1600) and checked against a monotonicity
+  diagnostic (Φ_y(ρ, s(ρ)) rising from 0 to 1 before diverging past the
+  true radius): ρ_Ω = 0.531336, smaller than both ρ_5 (0.604765) and
+  ρ_6 (0.633235) — the mixed-Ω growth rate exceeds both pure cases
+  rather than interpolating between them.
+- `split_tree_omega.py` written and run: brute-force check of whether
+  Theorem 1's characterization (Definition 1 of [1]) holds unchanged
+  when two different cycle sizes meet at the same cut vertex (a pentagon
+  glued to a hexagon). Two bugs found and fixed in this script itself
+  (not in [1]) during development: the positive test was first checking
+  the raw split partition returned by brute-force search rather than the
+  known block vertex sets, and the final summary had the bridge-test
+  expectation inverted. After fixing both, all checks (one positive,
+  three negative controls) pass as expected — evidence, not proof, that
+  the characterization needs no modification for this mixed case.
