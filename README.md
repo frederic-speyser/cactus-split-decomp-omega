@@ -54,12 +54,12 @@ Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
 
 ## Supplementary verification scripts
 
-- **`exhaustive_iso_omega.py`** *(planned)* — will build strict cacti for
-  Ω = {5, 6} with 1 and 2 blocks directly as graphs (no functional
-  equation involved), including configurations explicitly mixing a
-  pentagon and a hexagon, and deduplicate by graph isomorphism (via
-  `networkx`) — in the same spirit as `exhaustive_iso.py` in the original
-  repository, independently of the solver above.
+- **`exhaustive_iso_omega.py`** — builds strict cacti for Ω = {5, 6} with
+  1 and 2 blocks directly as graphs (no functional equation involved),
+  including configurations explicitly mixing a pentagon and a hexagon,
+  and deduplicates by graph isomorphism (via `networkx`) — in the same
+  spirit as `exhaustive_iso.py` in the original repository. Matches the
+  solver's *k* = 1, *k* = 2 unrooted coefficients exactly (see CHANGELOG).
 - **`split_tree_omega.py`** *(planned)* — a brute-force split-decomposition
   search (Definition 1 of the original paper), extending `split_tree_v2.py`
   to test whether Theorem 1's characterization still holds unchanged when
@@ -123,14 +123,15 @@ literature searches have shown, no numerical enumeration for a mixed
 
 The 25 rooted and 25 unrooted terms shown above (§ Usage) have been
 computed but not yet submitted to the OEIS — no search for a possible
-prior match has been done yet, and the coefficients have not yet been
-cross-checked by any method independent of this solver (see Progress
-below: `exhaustive_iso_omega.py` is the planned first independent check).
+prior match has been done yet. The *k* = 1 and *k* = 2 terms have been
+independently cross-checked by direct construction
+(`exhaustive_iso_omega.py`); everything beyond *k* = 2 still rests on the
+solver alone.
 
 ## Progress
 
 - [x] Extend the solver to non-singleton Ω (`mgonal_cactus_series_omega.py`)
-- [ ] Independent construction of the small cases, mixed sizes
+- [x] Independent construction of the small cases, mixed sizes
       (`exhaustive_iso_omega.py`)
 - [ ] Numerical estimate of ρ_{5,6} and comparison with ρ_5, ρ_6
       (`growth_rate_omega.py`)
