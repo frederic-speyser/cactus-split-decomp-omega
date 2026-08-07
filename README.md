@@ -45,12 +45,15 @@ Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
   growth rate 1/ρ_Ω from the coefficients computed above, via the same
   *n*−3/2-corrected ratio test used in `mgonal_cactus_growth_rate.py`,
   and compare it against the already-published values 1/ρ_5, 1/ρ_6.
-- **`critical_point_omega.py`** *(planned)* — will solve the critical-point
-  system Φ(ρ,τ)=τ, Φ_y(ρ,τ)=1 numerically for Ω = {5, 6}, and check whether
-  τ_Ω admits any recognizable closed form (by comparison with the pure
-  τ_5, τ_6 and pattern search), or whether the obstruction of Proposition 1
-  in the original paper has an analogue here. Whatever the outcome, it will
-  be documented as such — this script is not expected to succeed.
+- **`critical_point_omega.py`** — solves the critical-point system
+  Φ(ρ,τ)=τ, Φ_y(ρ,τ)=1 numerically for Ω = {5, 6}. As predicted by hand
+  before running it (the *m* = 6 branch of *K_C* reintroduces a term
+  linear in *y* that blocks the substitution of Theorem 2 of the original
+  paper), no closed form for τ_Ω was found among several natural
+  candidates. More notably: ρ_Ω = 0.531336 is smaller than *both* ρ_5
+  (0.604765) and ρ_6 (0.633235) — the growth rate exceeds both pure cases
+  rather than interpolating between them (see CHANGELOG for verification
+  details).
 
 ## Supplementary verification scripts
 
@@ -133,11 +136,14 @@ solver alone.
 - [x] Extend the solver to non-singleton Ω (`mgonal_cactus_series_omega.py`)
 - [x] Independent construction of the small cases, mixed sizes
       (`exhaustive_iso_omega.py`)
-- [ ] Numerical estimate of ρ_{5,6} and comparison with ρ_5, ρ_6
-      (`growth_rate_omega.py`)
-- [ ] Search for a closed form for τ_Ω, or evidence of a structural
-      obstruction comparable to Proposition 1 of [1]
-      (`critical_point_omega.py`)
+- [ ] Independent cross-check of ρ_{5,6} by the coefficient-ratio method
+      (`growth_rate_omega.py`) — a preliminary value (ρ_Ω = 0.531336,
+      smaller than both ρ_5 and ρ_6) already came out of
+      `critical_point_omega.py`'s bisection method; this item is about
+      confirming it by a second, unrelated method, as in [1]
+- [x] Search for a closed form for τ_Ω, or evidence of a structural
+      obstruction comparable to Proposition 1 of [1] — no closed form
+      found among natural candidates tested (`critical_point_omega.py`)
 - [ ] Check whether Theorem 1's split-decomposition characterization
       holds unchanged for mixed cycle sizes (`split_tree_omega.py`)
 - [ ] Independent verification of the unrooted series via the dissymmetry
