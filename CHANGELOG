@@ -13,3 +13,15 @@ README.
   `critical_point_omega.py`, `exhaustive_iso_omega.py`,
   `split_tree_omega.py`, `verify_dissymmetry_omega.py`, and
   `verify_pari_omega.gp`.
+- `mgonal_cactus_series_omega.py` written and run for Ω = {5, 6}: 25
+  non-zero rooted and unrooted terms computed (all non-negative
+  integers). Cross-checked against the pure *m* = 5 and *m* = 6 series of
+  [1] at degree 21, where no genuine mixed configuration is yet
+  arithmetically reachable: the sum of the two pure values (333 + 140)
+  matches the mixed-Ω value (473) exactly.
+- `exhaustive_iso_omega.py` written and run: independent construction of
+  the *k* = 1 and *k* = 2 block cases (pentagon alone, hexagon alone,
+  and the three size combinations at *k* = 2, including a pentagon glued
+  to a hexagon), deduplicated by graph isomorphism via `networkx`,
+  entirely independently of the functional equation. Matches the
+  solver's unrooted coefficients exactly (1 at each of x⁹, x¹⁰, x¹¹).
