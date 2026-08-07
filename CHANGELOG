@@ -1,0 +1,15 @@
+# Changelog
+
+All notable changes to this exploration are recorded here, in the order
+they happened, including any deviation from the plan described in the
+README.
+
+## 2026-08-07
+
+### Added
+- Repository created. README drafted, describing the planned scope
+  (Ω = {5, 6}) and listing seven scripts, currently in the process of
+  being written: `mgonal_cactus_series_omega.py`, `growth_rate_omega.py`,
+  `critical_point_omega.py`, `exhaustive_iso_omega.py`,
+  `split_tree_omega.py`, `verify_dissymmetry_omega.py`, and
+  `verify_pari_omega.gp`.
