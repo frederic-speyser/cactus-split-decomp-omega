@@ -4,7 +4,55 @@ All notable changes to this exploration are recorded here, in the order
 they happened, including any deviation from the plan described in the
 README.
 
-## 2026-08-07
+## v1.1 — "Complete toolkit" — 2026-08-07
+
+### Added
+- `growth_rate_omega.py` written and run: independent cross-check of ρ_Ω
+  via a coefficient-ratio test on the exact rational series, sharing no
+  code with `critical_point_omega.py`'s criticality-condition approach.
+  Truncation order reduced from a planned N=400 to N=150 for practicality
+  (the exact solver costs roughly O(N³); 26s at N=150, yielding 144
+  non-zero terms). Result: 1/ρ_Ω ≈ 1.865 by raw ratio test, versus 1.882
+  from the critical-point method — a ~1% gap consistent with the known
+  slow, from-above convergence of the raw ratio test (documented in [1])
+  rather than a contradiction. Both methods agree that ρ_Ω is smaller
+  than both ρ_5 and ρ_6.
+- `verify_dissymmetry_omega.py` written and run: independent reassembly
+  of the unrooted series G(x) via the dissymmetry theorem (§5.3 of [1]),
+  using `sympy.Rational` arithmetic with hand-written convolutions rather
+  than `fractions.Fraction`. A first attempt using fully symbolic SymPy
+  expressions (`sp.expand` on polynomial expressions, rebuilt every
+  fixed-point iteration) was abandoned as impractically slow and is
+  documented rather than silently dropped. Matches the main solver's
+  unrooted output exactly on the first 8 non-zero terms.
+- `verify_pari_omega.gp` written and run: a third, fully independent
+  solver using PARI/GP's native truncated power series arithmetic
+  (PARI/GP installed via `apt-get`, not previously available). Three
+  non-mathematical bugs found and fixed during development, all
+  documented in the script: (1) `omega` is a PARI/GP built-in (distinct
+  prime factor count) and silently shadowing it produced a cascade of
+  unrelated-looking parse errors — renamed to `Om`; (2) PARI/GP's parser
+  does not support embedded braces, so a `{...}`-grouped loop inside an
+  already-`{...}`-wrapped function body fails with a confusing error and
+  corrupts downstream parsing — fixed by rewriting all in-function loops
+  as calls to PARI's native `sum()`, avoiding blocks entirely; (3) `gp`
+  does not exit after running a script unless it calls `quit` itself,
+  otherwise hanging on stdin in a way easily mistaken for a computational
+  infinite loop. Once fixed, matches both Python implementations exactly,
+  and extends the cross-check to x^40 (beyond the 25 terms published so
+  far).
+
+### Changed
+- All seven planned scripts are now complete and cross-checked, four
+  independent ways in total (two Python implementations, one direct
+  combinatorial construction, one PARI/GP implementation). README
+  updated accordingly: no script remains marked *(planned)*, and the
+  Progress checklist is fully checked.
+- Repository reorganized into `python/` (six scripts) and `pari/`
+  (`verify_pari_omega.gp`), replacing the earlier flat layout. README's
+  Usage section updated with the corresponding paths.
+
+## v1.0 — 2026-08-07
 
 ### Added
 - Repository created. README drafted, describing the planned scope
@@ -46,13 +94,8 @@ README.
   expectation inverted. After fixing both, all checks (one positive,
   three negative controls) pass as expected — evidence, not proof, that
   the characterization needs no modification for this mixed case.
-- `growth_rate_omega.py` written and run: independent cross-check of ρ_Ω
-  via a coefficient-ratio test on the exact rational series, sharing no
-  code with `critical_point_omega.py`'s criticality-condition approach.
-  Truncation order reduced from a planned N=400 to N=150 for practicality
-  (the exact solver costs roughly O(N³); 26s at N=150, yielding 144
-  non-zero terms). Result: 1/ρ_Ω ≈ 1.865 by raw ratio test, versus 1.882
-  from the critical-point method — a ~1% gap consistent with the known
-  slow, from-above convergence of the raw ratio test (documented in [1])
-  rather than a contradiction. Both methods agree that ρ_Ω is smaller
-  than both ρ_5 and ρ_6.
+
+### Released
+- Tagged `v1.0`, archived on Zenodo:
+  [10.5281/zenodo.21838871](https://doi.org/10.5281/zenodo.21838871).
+  At this point: four scripts complete and cross-checked, three planned.
