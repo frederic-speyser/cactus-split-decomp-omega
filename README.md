@@ -33,12 +33,14 @@ Extension of the Enumeration of Non-Plane Cactus Graphs to the Case
 
 ## Core scripts
 
-- **`mgonal_cactus_series_omega.py`** *(planned)* — will compute the rooted
-  and unrooted enumeration series for strict cactus graphs admitting a
-  finite set Ω of cycle lengths, generalizing `mgonal_cactus_series.py`
-  from the original repository: the kernel *K_C* becomes a sum of one USEQ
-  term per size in Ω (§5.1 of the original paper, generalized), using the
-  same exact rational formal power series arithmetic (Python `Fraction`).
+- **`mgonal_cactus_series_omega.py`** — computes the rooted and unrooted
+  enumeration series for strict cactus graphs admitting a finite set Ω of
+  cycle lengths, generalizing `mgonal_cactus_series.py` from the original
+  repository: the kernel *K_C* becomes a sum of one USEQ term per size in
+  Ω (§5.1 of the original paper, generalized), using the same exact
+  rational formal power series arithmetic (Python `Fraction`).
+  Cross-checked against the pure *m* = 5, *m* = 6 series of [1] at
+  degree 21 (see CHANGELOG).
 - **`growth_rate_omega.py`** *(planned)* — will estimate the exponential
   growth rate 1/ρ_Ω from the coefficients computed above, via the same
   *n*−3/2-corrected ratio test used in `mgonal_cactus_growth_rate.py`,
@@ -89,6 +91,25 @@ No dependencies beyond the Python standard library and `numpy`; `networkx`
 is required only for `exhaustive_iso_omega.py`, and `sympy` only for
 `verify_dissymmetry_omega.py`. `verify_pari_omega.gp` requires PARI/GP.
 
+Actual output of `mgonal_cactus_series_omega.py --omega 5,6 --terms 25`:
+
+```
+Omega = {5, 6}
+Truncation order used: N = 100
+
+rooted (offset 0)  : x + x^5 + x^6 + 3x^9 + 6x^10 + 4x^11 + 13x^13 +
+41x^14 + 49x^15 + 22x^16 + 62x^17 + 278x^18 + 498x^19 + 415x^20 +
+473x^21 + 1920x^22 + 4600x^23 + 5693x^24 + 5547x^25 + 14359x^26 +
+40326x^27 + 66324x^28 + 74199x^29 + 126743x^30 + 349403x^31
+
+unrooted (offset 1): x^5 + x^6 + x^9 + x^10 + x^11 + 3x^13 + 6x^14 +
+6x^15 + 4x^16 + 8x^17 + 25x^18 + 42x^19 + 32x^20 + 44x^21 + 140x^22 +
+302x^23 + 357x^24 + 353x^25 + 848x^26 + 2192x^27 + 3391x^28 + 3759x^29 +
+6300x^30 + 16348x^31 + 31201x^32
+```
+
+Not yet submitted to the OEIS — see Data availability below.
+
 ## Relation to prior work
 
 Bahrani and Lumbroso's general split-decomposition template [3] already
@@ -100,14 +121,15 @@ literature searches have shown, no numerical enumeration for a mixed
 
 ## Data availability
 
-No integer sequence has been computed or submitted yet. Once
-`mgonal_cactus_series_omega.py` produces verified coefficients for
-Ω = {5, 6}, this section will list them, alongside their OEIS submission
-status if applicable.
+The 25 rooted and 25 unrooted terms shown above (§ Usage) have been
+computed but not yet submitted to the OEIS — no search for a possible
+prior match has been done yet, and the coefficients have not yet been
+cross-checked by any method independent of this solver (see Progress
+below: `exhaustive_iso_omega.py` is the planned first independent check).
 
 ## Progress
 
-- [ ] Extend the solver to non-singleton Ω (`mgonal_cactus_series_omega.py`)
+- [x] Extend the solver to non-singleton Ω (`mgonal_cactus_series_omega.py`)
 - [ ] Independent construction of the small cases, mixed sizes
       (`exhaustive_iso_omega.py`)
 - [ ] Numerical estimate of ρ_{5,6} and comparison with ρ_5, ρ_6
