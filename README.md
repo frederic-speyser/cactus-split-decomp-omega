@@ -1,9 +1,5 @@
 # Numerical Extension of the Enumeration of Non-Plane Cactus Graphs to the Case Ω = {5, 6} - Exploratory computations
 
-**Status: Feature-complete** (all seven planned scripts written and
-cross-checked, v1.1) - this refers only to the scripts, not to any
-scientific claim; see § About this exploration and § Progress for what
-remains unproved.
 
 ## About this exploration
 
@@ -58,7 +54,7 @@ pari/     the one PARI/GP script (verify_pari_omega.gp)
   ratio test used in `mgonal_cactus_growth_rate.py`, and compares it
   against the already-published values 1/ρ_5, 1/ρ_6. Independent of
   `critical_point_omega.py` (no shared code); result: 1/ρ_Ω ≈ 1.865 by
-  raw ratio test, versus 1.882 from the critical-point method — a small
+  raw ratio test, versus 1.882 from the critical-point method - a small
   gap consistent with the known slow convergence of the raw ratio test,
   not a contradiction (see CHANGELOG).
 - **`critical_point_omega.py`** - solves the critical-point system
@@ -67,7 +63,7 @@ pari/     the one PARI/GP script (verify_pari_omega.gp)
   linear in *y* that blocks the substitution of Theorem 2 of the original
   paper), no closed form for τ_Ω was found among several natural
   candidates. More notably: ρ_Ω = 0.531336 is smaller than *both* ρ_5
-  (0.604765) and ρ_6 (0.633235) — the growth rate exceeds both pure cases
+  (0.604765) and ρ_6 (0.633235) - the growth rate exceeds both pure cases
   rather than interpolating between them (see CHANGELOG for verification
   details).
 
@@ -76,7 +72,7 @@ pari/     the one PARI/GP script (verify_pari_omega.gp)
 - **`exhaustive_iso_omega.py`** - builds strict cacti for Ω = {5, 6} with
   1 and 2 blocks directly as graphs (no functional equation involved),
   including configurations explicitly mixing a pentagon and a hexagon,
-  and deduplicates by graph isomorphism (via `networkx`) — in the same
+  and deduplicates by graph isomorphism (via `networkx`) - in the same
   spirit as `exhaustive_iso.py` in the original repository. Matches the
   solver's *k* = 1, *k* = 2 unrooted coefficients exactly (see CHANGELOG).
 - **`split_tree_omega.py`** - a brute-force split-decomposition search
@@ -87,20 +83,20 @@ pari/     the one PARI/GP script (verify_pari_omega.gp)
   ever treats a single fixed *m*. Result: it does, on the cases tested
   (a pentagon glued to a hexagon, plus the same three negative controls
   as the original script). Two bugs were found and fixed in this script
-  during development (see CHANGELOG) — the result is evidence, not proof,
+  during development (see CHANGELOG) - the result is evidence, not proof,
   of the wider claim.
-- **`verify_dissymmetry_omega.py`** - verifies the unrooted series G(x)
+- **`verify_dissymmetry_omega.py`** — verifies the unrooted series G(x)
   via the dissymmetry theorem for mixed Ω, where the re-rooted term T_Cm
   becomes a sum of dihedral cycle indices Z_D5 + Z_D6 rather than a
-  single one — extending `verify_dissymmetry_all_m.py` to the mixed case.
+  single one - extending `verify_dissymmetry_all_m.py` to the mixed case.
   Uses `sympy.Rational` with hand-written convolutions rather than
   `fractions.Fraction`. Matches the main solver exactly on the first 8
-  non-zero terms (see CHANGELOG for a documented dead end — a fully
+  non-zero terms (see CHANGELOG for a documented dead end - a fully
   symbolic SymPy approach that was too slow and was abandoned).
 - **`verify_pari_omega.gp`** - a second, independent solver in PARI/GP,
   using native truncated power series arithmetic, as a cross-check of
   `mgonal_cactus_series_omega.py` by a different code path (and language)
-  entirely — extending `verify_pari.gp` to the mixed-Ω case. Matches both
+  entirely - extending `verify_pari.gp` to the mixed-Ω case. Matches both
   Python implementations exactly, and extends the check to x^40 (see
   CHANGELOG for three non-mathematical PARI/GP pitfalls encountered and
   documented along the way).
@@ -145,7 +141,7 @@ unrooted (offset 1): x^5 + x^6 + x^9 + x^10 + x^11 + 3x^13 + 6x^14 +
 6300x^30 + 16348x^31 + 31201x^32
 ```
 
-Not yet submitted to the OEIS — see Data availability below.
+Not yet submitted to the OEIS - see Data availability below.
 
 ## Relation to prior work
 
@@ -197,13 +193,15 @@ discussed with others.
 
 ## Citation
 
-A citable archive of this repository is available via Zenodo. The latest
-tagged version is v1.0
-([10.5281/zenodo.21838871](https://doi.org/10.5281/zenodo.21838871)); a
-v1.1 archive ("Complete toolkit" — all seven scripts in place, organized
-into `python/` and `pari/`) is expected shortly, see CHANGELOG. No
-written account of this work has been deposited yet — see § About this
-exploration for the working paper planned once the computations are
+Citable archives of this repository are available via Zenodo:
+- **v1.1** ("Complete toolkit" — all seven scripts in place, organized
+  into `python/` and `pari/`):
+  [10.5281/zenodo.21840699](https://doi.org/10.5281/zenodo.21840699)
+- v1.0 (initial release, four of seven scripts):
+  [10.5281/zenodo.21838871](https://doi.org/10.5281/zenodo.21838871)
+
+No written account of this work has been deposited yet — see § About
+this exploration for the working paper planned once the computations are
 further along.
 
 ## References
@@ -223,7 +221,7 @@ further along.
 
 ## Author
 
-Frédéric G. Speyser — Independent Researcher, France - https://orcid.org/0000-0002-1767-5325
+Frédéric G. Speyser - Independent Researcher, France - https://orcid.org/0000-0002-1767-5325
 
 ## License
 
